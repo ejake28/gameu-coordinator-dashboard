@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang='en'><head><meta charset='UTF-8'>
+<title>GameU CX Coordinator Dashboard</title>
+<style>
+* { box-sizing: border-box; }
+body { font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif; margin: 0; background: linear-gradient(135deg, #F8FAFC 0%, #EEF3F8 100%); color: #1F3A5F; min-height: 100vh; }
+.wrap { max-width: 1180px; margin: 0 auto; padding: 28px 24px 60px; }
+header { background: linear-gradient(135deg, #1F3A5F 0%, #2C4D7B 100%); color: #fff; padding: 28px 32px; border-radius: 12px; margin-bottom: 24px; box-shadow: 0 4px 20px rgba(31,58,95,0.15); }
+header h1 { margin: 0 0 6px; font-size: 28px; font-weight: 800; letter-spacing: -0.3px; }
+header .subtitle { font-size: 14px; opacity: 0.85; }
+header .badge { display: inline-block; background: #F39C12; color: #fff; padding: 4px 12px; border-radius: 20px; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.6px; margin-bottom: 6px; }
+
+.hero { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; margin-bottom: 28px; }
+@media (max-width: 1100px) { .hero { grid-template-columns: repeat(3, 1fr); } }
+@media (max-width: 720px)  { .hero { grid-template-columns: repeat(2, 1fr); } }
+.tile { background: #fff; border-radius: 12px; padding: 22px 20px; box-shadow: 0 2px 12px rgba(31,58,95,0.06); border-top: 4px solid #F39C12; transition: transform 0.15s; }
+.tile:hover { transform: translateY(-2px); }
+.tile.green { border-top-color: #16A085; }
+.tile.teal  { border-top-color: #2980B9; }
+.tile.orange { border-top-color: #F39C12; }
+.tile.amber { border-top-color: #E67E22; }
+.tile.purple { border-top-color: #8E44AD; }
+.tile .label { font-size: 11px; color: #7A8A9A; text-transform: uppercase; letter-spacing: 0.6px; font-weight: 600; }
+.tile .big { font-size: 38px; font-weight: 800; color: #1F3A5F; margin: 6px 0 4px; line-height: 1; letter-spacing: -0.5px; }
+.tile .sub { font-size: 12px; color: #7A8A9A; }
+.tile .sub strong { color: #1F3A5F; }
+
+.section { background: #fff; border-radius: 12px; padding: 22px 26px; margin-bottom: 22px; box-shadow: 0 2px 12px rgba(31,58,95,0.06); }
+.section h2 { margin: 0 0 14px; font-size: 18px; color: #1F3A5F; font-weight: 700; display: flex; align-items: center; gap: 8px; }
+.section h2 .emoji { font-size: 22px; }
+
+.row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin-bottom: 22px; }
+.row2 .section { margin-bottom: 0; }
+
+.planning-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; }
+.planning-grid .col h3 { margin: 0 0 10px; font-size: 13px; font-weight: 700; color: #1F3A5F; text-transform: uppercase; letter-spacing: 0.4px; }
+
+table { width: 100%; border-collapse: collapse; font-size: 13px; }
+th { text-align: left; padding: 8px 10px; background: #F8FAFC; color: #1F3A5F; font-weight: 700; font-size: 11px; text-transform: uppercase; letter-spacing: 0.4px; border-bottom: 2px solid #E4E9EF; }
+td { padding: 9px 10px; border-bottom: 1px solid #EEF3F8; }
+td.num { text-align: right; font-weight: 700; color: #1F3A5F; }
+
+.prog-bar { display: inline-block; height: 8px; background: linear-gradient(90deg, #F39C12, #E67E22); border-radius: 4px; margin-right: 8px; vertical-align: middle; }
+
+.slo-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.slo-stat { background: linear-gradient(135deg, #F8FAFC 0%, #EEF3F8 100%); border-radius: 10px; padding: 16px 18px; border: 1px solid #E4E9EF; }
+.slo-num { font-size: 32px; font-weight: 800; color: #1F3A5F; line-height: 1; letter-spacing: -0.5px; }
+.slo-num.green { color: #16A085; }
+.slo-lbl { font-size: 11px; color: #7A8A9A; text-transform: uppercase; letter-spacing: 0.5px; font-weight: 600; margin-top: 4px; }
+.slo-detail { font-size: 12px; color: #1F3A5F; margin-top: 8px; line-height: 1.4; }
+.bucket-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; }
+.bucket { background: linear-gradient(135deg, #F8FAFC 0%, #EEF3F8 100%); border-radius: 10px; padding: 14px 12px; text-align: center; border: 1px solid #E4E9EF; }
+.bucket .num { font-size: 26px; font-weight: 800; color: #1F3A5F; line-height: 1; }
+.bucket .lbl { font-size: 10px; color: #7A8A9A; text-transform: uppercase; letter-spacing: 0.4px; margin-top: 4px; font-weight: 600; }
+.bucket.now { background: linear-gradient(135deg, #FFF4E5 0%, #FCE4B6 100%); border-color: #F39C12; }
+.bucket.now .num { color: #B9770E; }
+
+.win-card { background: linear-gradient(135deg, #E8F8F2 0%, #D5F5E3 100%); border-radius: 10px; padding: 16px 20px; border-left: 4px solid #16A085; }
+.win-card .win-title { font-size: 12px; font-weight: 700; color: #16A085; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px; }
+.win-card .win-text { font-size: 14px; color: #1F3A5F; line-height: 1.5; }
+.win-card .win-text strong { color: #16A085; }
+
+footer { text-align: center; color: #7A8A9A; font-size: 11px; margin-top: 20px; padding-top: 16px; border-top: 1px solid #E4E9EF; }
+footer strong { color: #1F3A5F; }
+</style>
+</head>
+<body>
+<div class='wrap'>
+<header>
+<div class='badge'>CX Coordinator View</div>
+<h1>Our Week at GameU &#127918;</h1>
+<div class='subtitle'>A snapshot of the work we're doing, the students we're helping, and what's headed our way.</div>
+</header>
+
+<div class='hero'>
+  <div class='tile orange'>
+    <div class='label'>New students this week</div>
+    <div class='big'>4</div>
+    <div class='sub'><span style='color:#E67E22;font-weight:700'>-9 vs last week</span> &middot; <span style='color:#16A085;font-weight:700'>+4.0 hrs/wk</span> added</div>
+  </div>
+  <div class='tile green'>
+    <div class='label'>PTO coverage (advance notice)</div>
+    <div class='big'>43%</div>
+    <div class='sub'><strong>82 covered</strong> of 192 total &middot; 87 still pending</div>
+  </div>
+  <div class='tile amber'>
+    <div class='label'>Sub coverage (callouts)</div>
+    <div class='big'>21%</div>
+    <div class='sub'><strong>16 covered</strong> of 78 total &middot; 41 still pending</div>
+  </div>
+  <div class='tile teal'>
+    <div class='label'>Active students this week</div>
+    <div class='big'>1,787</div>
+    <div class='sub'>Currently scheduled in classes</div>
+  </div>
+  <div class='tile purple'>
+    <div class='label'>PTO requests this week</div>
+    <div class='big'>270</div>
+    <div class='sub'><span style='color:#16A085;font-weight:700'>1133</span> processed in the last 30 days</div>
+  </div>
+</div>
+
+<div class='row2'>
+<div class='section'>
+<h2><span class='emoji'>&#9201;</span> New Student SLO (10-day target)</h2>
+<div class='slo-grid'>
+  <div class='slo-stat'>
+    <div class='slo-num green'>53%</div>
+    <div class='slo-lbl'>completed within 10 days</div>
+    <div class='slo-detail'>70 records completed in last 30 days &middot; median 9.4 days</div>
+  </div>
+  <div class='slo-stat'>
+    <div class='slo-num'>49</div>
+    <div class='slo-lbl'>open in queue</div>
+    <div class='slo-detail'>Median age 7.6 days &middot; <strong style='color:#C0392B'>15 past SLO</strong></div>
+  </div>
+</div>
+</div>
+
+<div class='section'>
+<h2><span class='emoji'>&#128202;</span> Coverage trend (last 12 weeks)</h2>
+<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 720 280' width='100%' style='max-width:720px'><text x='55' y='20' style='font-family:Segoe UI,Arial;font-size:14px;font-weight:700;fill:#1F3A5F'>Coverage % over time (last 12 weeks)</text><line x1='55' y1='235' x2='580' y2='235' stroke='#E4E9EF' stroke-width='1'/><text x='50' y='239' style='font-family:Segoe UI,Arial;font-size:10px;fill:#888' text-anchor='end'>0%</text><line x1='55' y1='183.75' x2='580' y2='183.75' stroke='#E4E9EF' stroke-width='1'/><text x='50' y='187.75' style='font-family:Segoe UI,Arial;font-size:10px;fill:#888' text-anchor='end'>25%</text><line x1='55' y1='132.5' x2='580' y2='132.5' stroke='#E4E9EF' stroke-width='1'/><text x='50' y='136.5' style='font-family:Segoe UI,Arial;font-size:10px;fill:#888' text-anchor='end'>50%</text><line x1='55' y1='81.25' x2='580' y2='81.25' stroke='#E4E9EF' stroke-width='1'/><text x='50' y='85.25' style='font-family:Segoe UI,Arial;font-size:10px;fill:#888' text-anchor='end'>75%</text><line x1='55' y1='30' x2='580' y2='30' stroke='#E4E9EF' stroke-width='1'/><text x='50' y='34' style='font-family:Segoe UI,Arial;font-size:10px;fill:#888' text-anchor='end'>100%</text><polyline points='55,126.35 102.727272727273,116.1 150.454545454545,148.9 198.181818181818,93.55 245.909090909091,95.6 293.636363636364,134.55 341.363636363636,107.9 389.090909090909,97.65 436.818181818182,144.8 484.545454545455,128.4 532.272727272727,148.9 580,146.85' fill='none' stroke='#16A085' stroke-width='3' stroke-linejoin='round'/><circle cx='55' cy='126.35' r='4' fill='#fff' stroke='#16A085' stroke-width='2.5'/><circle cx='102.727272727273' cy='116.1' r='4' fill='#fff' stroke='#16A085' stroke-width='2.5'/><circle cx='150.454545454545' cy='148.9' r='4' fill='#fff' stroke='#16A085' stroke-width='2.5'/><circle cx='198.181818181818' cy='93.55' r='4' fill='#fff' stroke='#16A085' stroke-width='2.5'/><circle cx='245.909090909091' cy='95.6' r='4' fill='#fff' stroke='#16A085' stroke-width='2.5'/><circle cx='293.636363636364' cy='134.55' r='4' fill='#fff' stroke='#16A085' stroke-width='2.5'/><circle cx='341.363636363636' cy='107.9' r='4' fill='#fff' stroke='#16A085' stroke-width='2.5'/><circle cx='389.090909090909' cy='97.65' r='4' fill='#fff' stroke='#16A085' stroke-width='2.5'/><circle cx='436.818181818182' cy='144.8' r='4' fill='#fff' stroke='#16A085' stroke-width='2.5'/><circle cx='484.545454545455' cy='128.4' r='4' fill='#fff' stroke='#16A085' stroke-width='2.5'/><circle cx='532.272727272727' cy='148.9' r='4' fill='#fff' stroke='#16A085' stroke-width='2.5'/><circle cx='580' cy='146.85' r='4' fill='#fff' stroke='#16A085' stroke-width='2.5'/><polyline points='55,173.5 102.727272727273,155.05 150.454545454545,122.25 198.181818181818,122.25 245.909090909091,165.3 293.636363636364,169.4 341.363636363636,150.95 389.090909090909,153 436.818181818182,155.05 484.545454545455,230.9 532.272727272727,202.2 580,191.95' fill='none' stroke='#E67E22' stroke-width='3' stroke-linejoin='round'/><circle cx='55' cy='173.5' r='4' fill='#fff' stroke='#E67E22' stroke-width='2.5'/><circle cx='102.727272727273' cy='155.05' r='4' fill='#fff' stroke='#E67E22' stroke-width='2.5'/><circle cx='150.454545454545' cy='122.25' r='4' fill='#fff' stroke='#E67E22' stroke-width='2.5'/><circle cx='198.181818181818' cy='122.25' r='4' fill='#fff' stroke='#E67E22' stroke-width='2.5'/><circle cx='245.909090909091' cy='165.3' r='4' fill='#fff' stroke='#E67E22' stroke-width='2.5'/><circle cx='293.636363636364' cy='169.4' r='4' fill='#fff' stroke='#E67E22' stroke-width='2.5'/><circle cx='341.363636363636' cy='150.95' r='4' fill='#fff' stroke='#E67E22' stroke-width='2.5'/><circle cx='389.090909090909' cy='153' r='4' fill='#fff' stroke='#E67E22' stroke-width='2.5'/><circle cx='436.818181818182' cy='155.05' r='4' fill='#fff' stroke='#E67E22' stroke-width='2.5'/><circle cx='484.545454545455' cy='230.9' r='4' fill='#fff' stroke='#E67E22' stroke-width='2.5'/><circle cx='532.272727272727' cy='202.2' r='4' fill='#fff' stroke='#E67E22' stroke-width='2.5'/><circle cx='580' cy='191.95' r='4' fill='#fff' stroke='#E67E22' stroke-width='2.5'/><text x='55' y='249' style='font-family:Segoe UI,Arial;font-size:10px;fill:#666' text-anchor='middle'>3/9</text><text x='102.727272727273' y='249' style='font-family:Segoe UI,Arial;font-size:10px;fill:#666' text-anchor='middle'>3/16</text><text x='150.454545454545' y='249' style='font-family:Segoe UI,Arial;font-size:10px;fill:#666' text-anchor='middle'>3/23</text><text x='198.181818181818' y='249' style='font-family:Segoe UI,Arial;font-size:10px;fill:#666' text-anchor='middle'>3/30</text><text x='245.909090909091' y='249' style='font-family:Segoe UI,Arial;font-size:10px;fill:#666' text-anchor='middle'>4/6</text><text x='293.636363636364' y='249' style='font-family:Segoe UI,Arial;font-size:10px;fill:#666' text-anchor='middle'>4/13</text><text x='341.363636363636' y='249' style='font-family:Segoe UI,Arial;font-size:10px;fill:#666' text-anchor='middle'>4/20</text><text x='389.090909090909' y='249' style='font-family:Segoe UI,Arial;font-size:10px;fill:#666' text-anchor='middle'>4/27</text><text x='436.818181818182' y='249' style='font-family:Segoe UI,Arial;font-size:10px;fill:#666' text-anchor='middle'>5/4</text><text x='484.545454545455' y='249' style='font-family:Segoe UI,Arial;font-size:10px;fill:#666' text-anchor='middle'>5/11</text><text x='532.272727272727' y='249' style='font-family:Segoe UI,Arial;font-size:10px;fill:#666' text-anchor='middle'>5/18</text><text x='580' y='249' style='font-family:Segoe UI,Arial;font-size:10px;fill:#666' text-anchor='middle'>5/25</text><rect x='594' y='34' width='14' height='4' fill='#16A085' rx='2'/><text x='614' y='40' style='font-family:Segoe UI,Arial;font-size:11px;fill:#1F3A5F;font-weight:600'>PTO Coverage %</text><rect x='594' y='54' width='14' height='4' fill='#E67E22' rx='2'/><text x='614' y='60' style='font-family:Segoe UI,Arial;font-size:11px;fill:#1F3A5F;font-weight:600'>Sub Coverage %</text></svg>
+<div style='font-size:11px;color:#7A8A9A;margin-top:6px;font-style:italic'>Confirmed-covered % over time. Higher is better. Note that current-week numbers will rise as in-progress records get marked covered.</div>
+</div>
+</div>
+
+<div class='section'>
+<h2><span class='emoji'>&#128200;</span> New students moved to Attending</h2>
+<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 720 280' width='100%' style='max-width:720px'><text x='50' y='20' style='font-family:Segoe UI,Arial;font-size:14px;font-weight:700;fill:#1F3A5F'>New students moved to Attending (last 12 weeks)</text><line x1='50' y1='230' x2='700' y2='230' stroke='#E4E9EF' stroke-width='1'/><text x='45' y='234' style='font-family:Segoe UI,Arial;font-size:10px;fill:#888' text-anchor='end'>0</text><line x1='50' y1='180' x2='700' y2='180' stroke='#E4E9EF' stroke-width='1'/><text x='45' y='184' style='font-family:Segoe UI,Arial;font-size:10px;fill:#888' text-anchor='end'>8</text><line x1='50' y1='130' x2='700' y2='130' stroke='#E4E9EF' stroke-width='1'/><text x='45' y='134' style='font-family:Segoe UI,Arial;font-size:10px;fill:#888' text-anchor='end'>17</text><line x1='50' y1='80' x2='700' y2='80' stroke='#E4E9EF' stroke-width='1'/><text x='45' y='84' style='font-family:Segoe UI,Arial;font-size:10px;fill:#888' text-anchor='end'>26</text><line x1='50' y1='30' x2='700' y2='30' stroke='#E4E9EF' stroke-width='1'/><text x='45' y='34' style='font-family:Segoe UI,Arial;font-size:10px;fill:#888' text-anchor='end'>34</text><rect x='50' y='100.588235294118' width='37' height='129.411764705882' fill='#F39C12' rx='3'/><text x='68.5' y='96.5882352941177' style='font-family:Segoe UI,Arial;font-size:10px;font-weight:700;fill:#1F3A5F' text-anchor='middle'>22</text><text x='68.5' y='244' style='font-family:Segoe UI,Arial;font-size:10px;fill:#666' text-anchor='middle'>3/9</text><rect x='105.727272727273' y='124.117647058824' width='37' height='105.882352941176' fill='#F39C12' rx='3'/><text x='124.227272727273' y='120.117647058824' style='font-family:Segoe UI,Arial;font-size:10px;font-weight:700;fill:#1F3A5F' text-anchor='middle'>18</text><text x='124.227272727273' y='244' style='font-family:Segoe UI,Arial;font-size:10px;fill:#666' text-anchor='middle'>3/16</text><rect x='161.454545454545' y='65.2941176470588' width='37' height='164.705882352941' fill='#F39C12' rx='3'/><text x='179.954545454545' y='61.2941176470588' style='font-family:Segoe UI,Arial;font-size:10px;font-weight:700;fill:#1F3A5F' text-anchor='middle'>28</text><text x='179.954545454545' y='244' style='font-family:Segoe UI,Arial;font-size:10px;fill:#666' text-anchor='middle'>3/23</text><rect x='217.181818181818' y='130' width='37' height='100' fill='#F39C12' rx='3'/><text x='235.681818181818' y='126' style='font-family:Segoe UI,Arial;font-size:10px;font-weight:700;fill:#1F3A5F' text-anchor='middle'>17</text><text x='235.681818181818' y='244' style='font-family:Segoe UI,Arial;font-size:10px;fill:#666' text-anchor='middle'>3/30</text><rect x='272.909090909091' y='124.117647058824' width='37' height='105.882352941176' fill='#F39C12' rx='3'/><text x='291.409090909091' y='120.117647058824' style='font-family:Segoe UI,Arial;font-size:10px;font-weight:700;fill:#1F3A5F' text-anchor='middle'>18</text><text x='291.409090909091' y='244' style='font-family:Segoe UI,Arial;font-size:10px;fill:#666' text-anchor='middle'>4/6</text><rect x='328.636363636364' y='135.882352941176' width='37' height='94.1176470588235' fill='#F39C12' rx='3'/><text x='347.136363636364' y='131.882352941176' style='font-family:Segoe UI,Arial;font-size:10px;font-weight:700;fill:#1F3A5F' text-anchor='middle'>16</text><text x='347.136363636364' y='244' style='font-family:Segoe UI,Arial;font-size:10px;fill:#666' text-anchor='middle'>4/13</text><rect x='384.363636363636' y='130' width='37' height='100' fill='#F39C12' rx='3'/><text x='402.863636363636' y='126' style='font-family:Segoe UI,Arial;font-size:10px;font-weight:700;fill:#1F3A5F' text-anchor='middle'>17</text><text x='402.863636363636' y='244' style='font-family:Segoe UI,Arial;font-size:10px;fill:#666' text-anchor='middle'>4/20</text><rect x='440.090909090909' y='135.882352941176' width='37' height='94.1176470588235' fill='#F39C12' rx='3'/><text x='458.590909090909' y='131.882352941176' style='font-family:Segoe UI,Arial;font-size:10px;font-weight:700;fill:#1F3A5F' text-anchor='middle'>16</text><text x='458.590909090909' y='244' style='font-family:Segoe UI,Arial;font-size:10px;fill:#666' text-anchor='middle'>4/27</text><rect x='495.818181818182' y='71.1764705882353' width='37' height='158.823529411765' fill='#F39C12' rx='3'/><text x='514.318181818182' y='67.1764705882353' style='font-family:Segoe UI,Arial;font-size:10px;font-weight:700;fill:#1F3A5F' text-anchor='middle'>27</text><text x='514.318181818182' y='244' style='font-family:Segoe UI,Arial;font-size:10px;fill:#666' text-anchor='middle'>5/4</text><rect x='551.545454545455' y='59.4117647058823' width='37' height='170.588235294118' fill='#F39C12' rx='3'/><text x='570.045454545455' y='55.4117647058823' style='font-family:Segoe UI,Arial;font-size:10px;font-weight:700;fill:#1F3A5F' text-anchor='middle'>29</text><text x='570.045454545455' y='244' style='font-family:Segoe UI,Arial;font-size:10px;fill:#666' text-anchor='middle'>5/11</text><rect x='607.272727272727' y='153.529411764706' width='37' height='76.4705882352941' fill='#F39C12' rx='3'/><text x='625.772727272727' y='149.529411764706' style='font-family:Segoe UI,Arial;font-size:10px;font-weight:700;fill:#1F3A5F' text-anchor='middle'>13</text><text x='625.772727272727' y='244' style='font-family:Segoe UI,Arial;font-size:10px;fill:#666' text-anchor='middle'>5/18</text><rect x='663' y='206.470588235294' width='37' height='23.5294117647059' fill='#1F3A5F' rx='3'/><text x='681.5' y='202.470588235294' style='font-family:Segoe UI,Arial;font-size:10px;font-weight:700;fill:#1F3A5F' text-anchor='middle'>4</text><text x='681.5' y='244' style='font-family:Segoe UI,Arial;font-size:10px;fill:#666' text-anchor='middle'>5/25</text></svg>
+</div>
+
+<div class='section'>
+<h2><span class='emoji'>&#128737;</span> What's coming &mdash; forward intake pipeline</h2>
+<p style='font-size:12px;color:#7A8A9A;margin:0 0 12px'>Open deals at each stage before "Attending." Useful for seeing what's heading our way.</p>
+<div class='bucket-grid' style='grid-template-columns: repeat(6, 1fr)'>
+<div class='bucket'><div class='num'>214</div><div class='lbl'>Lead In</div></div><div class='bucket'><div class='num'>49</div><div class='lbl'>Trial Class Set</div></div><div class='bucket'><div class='num'>41</div><div class='lbl'>Waiting on Decision</div></div><div class='bucket'><div class='num'>55</div><div class='lbl'>Hold / Need Approval</div></div><div class='bucket'><div class='num'>0</div><div class='lbl'>Need to Schedule</div></div><div class='bucket'><div class='num'>0</div><div class='lbl'>Scheduled / 1st Class Set</div></div>
+</div>
+</div>
+
+<div class='section'>
+<h2><span class='emoji'>&#127793;</span> Cumulative students we've onboarded</h2>
+<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 720 260' width='100%' style='max-width:720px'><text x='55' y='20' style='font-family:Segoe UI,Arial;font-size:14px;font-weight:700;fill:#1F3A5F'>Cumulative students onboarded (last 12 weeks)</text><line x1='55' y1='215' x2='700' y2='215' stroke='#E4E9EF' stroke-width='1'/><text x='50' y='219' style='font-family:Segoe UI,Arial;font-size:10px;fill:#888' text-anchor='end'>0</text><line x1='55' y1='168.75' x2='700' y2='168.75' stroke='#E4E9EF' stroke-width='1'/><text x='50' y='172.75' style='font-family:Segoe UI,Arial;font-size:10px;fill:#888' text-anchor='end'>64</text><line x1='55' y1='122.5' x2='700' y2='122.5' stroke='#E4E9EF' stroke-width='1'/><text x='50' y='126.5' style='font-family:Segoe UI,Arial;font-size:10px;fill:#888' text-anchor='end'>128</text><line x1='55' y1='76.25' x2='700' y2='76.25' stroke='#E4E9EF' stroke-width='1'/><text x='50' y='80.25' style='font-family:Segoe UI,Arial;font-size:10px;fill:#888' text-anchor='end'>192</text><line x1='55' y1='30' x2='700' y2='30' stroke='#E4E9EF' stroke-width='1'/><text x='50' y='34' style='font-family:Segoe UI,Arial;font-size:10px;fill:#888' text-anchor='end'>256</text><text x='55' y='229' style='font-family:Segoe UI,Arial;font-size:10px;fill:#666' text-anchor='middle'>3/9</text><text x='113.636363636364' y='229' style='font-family:Segoe UI,Arial;font-size:10px;fill:#666' text-anchor='middle'>3/16</text><text x='172.272727272727' y='229' style='font-family:Segoe UI,Arial;font-size:10px;fill:#666' text-anchor='middle'>3/23</text><text x='230.909090909091' y='229' style='font-family:Segoe UI,Arial;font-size:10px;fill:#666' text-anchor='middle'>3/30</text><text x='289.545454545455' y='229' style='font-family:Segoe UI,Arial;font-size:10px;fill:#666' text-anchor='middle'>4/6</text><text x='348.181818181818' y='229' style='font-family:Segoe UI,Arial;font-size:10px;fill:#666' text-anchor='middle'>4/13</text><text x='406.818181818182' y='229' style='font-family:Segoe UI,Arial;font-size:10px;fill:#666' text-anchor='middle'>4/20</text><text x='465.454545454545' y='229' style='font-family:Segoe UI,Arial;font-size:10px;fill:#666' text-anchor='middle'>4/27</text><text x='524.090909090909' y='229' style='font-family:Segoe UI,Arial;font-size:10px;fill:#666' text-anchor='middle'>5/4</text><text x='582.727272727273' y='229' style='font-family:Segoe UI,Arial;font-size:10px;fill:#666' text-anchor='middle'>5/11</text><text x='641.363636363636' y='229' style='font-family:Segoe UI,Arial;font-size:10px;fill:#666' text-anchor='middle'>5/18</text><text x='700' y='229' style='font-family:Segoe UI,Arial;font-size:10px;fill:#666' text-anchor='middle'>5/25</text><polygon points='55,215 55,199.1015625 113.636363636364,186.09375 172.272727272727,165.859375 230.909090909091,153.57421875 289.545454545455,140.56640625 348.181818181818,129.00390625 406.818181818182,116.71875 465.454545454545,105.15625 524.090909090909,85.64453125 582.727272727273,64.6875 641.363636363636,55.29296875 700,52.40234375 700,215' fill='#16A085' fill-opacity='0.15'/><polyline points='55,199.1015625 113.636363636364,186.09375 172.272727272727,165.859375 230.909090909091,153.57421875 289.545454545455,140.56640625 348.181818181818,129.00390625 406.818181818182,116.71875 465.454545454545,105.15625 524.090909090909,85.64453125 582.727272727273,64.6875 641.363636363636,55.29296875 700,52.40234375' fill='none' stroke='#16A085' stroke-width='3' stroke-linejoin='round'/><circle cx='55' cy='199.1015625' r='4' fill='#fff' stroke='#16A085' stroke-width='2.5'/><circle cx='113.636363636364' cy='186.09375' r='4' fill='#fff' stroke='#16A085' stroke-width='2.5'/><circle cx='172.272727272727' cy='165.859375' r='4' fill='#fff' stroke='#16A085' stroke-width='2.5'/><circle cx='230.909090909091' cy='153.57421875' r='4' fill='#fff' stroke='#16A085' stroke-width='2.5'/><circle cx='289.545454545455' cy='140.56640625' r='4' fill='#fff' stroke='#16A085' stroke-width='2.5'/><circle cx='348.181818181818' cy='129.00390625' r='4' fill='#fff' stroke='#16A085' stroke-width='2.5'/><circle cx='406.818181818182' cy='116.71875' r='4' fill='#fff' stroke='#16A085' stroke-width='2.5'/><circle cx='465.454545454545' cy='105.15625' r='4' fill='#fff' stroke='#16A085' stroke-width='2.5'/><circle cx='524.090909090909' cy='85.64453125' r='4' fill='#fff' stroke='#16A085' stroke-width='2.5'/><circle cx='582.727272727273' cy='64.6875' r='4' fill='#fff' stroke='#16A085' stroke-width='2.5'/><circle cx='641.363636363636' cy='55.29296875' r='4' fill='#fff' stroke='#16A085' stroke-width='2.5'/><circle cx='700' cy='52.40234375' r='4' fill='#fff' stroke='#16A085' stroke-width='2.5'/></svg>
+<div style='font-size:11px;color:#7A8A9A;margin-top:6px;font-style:italic'>Running total of new students added to the pipeline over the last 12 weeks. Every step up is a student our team brought in.</div>
+</div>
+
+<div class='section'>
+<h2><span class='emoji'>&#128197;</span> Heads-up - upcoming PTO requests on our calendar</h2>
+<div class='bucket-grid'>
+<div class='bucket now'><div class='num'>101</div><div class='lbl'>This week</div></div><div class='bucket '><div class='num'>213</div><div class='lbl'>Next week</div></div><div class='bucket '><div class='num'>78</div><div class='lbl'>2 weeks out</div></div><div class='bucket '><div class='num'>53</div><div class='lbl'>3 weeks out</div></div><div class='bucket '><div class='num'>46</div><div class='lbl'>4 weeks out</div></div>
+</div>
+<div style='font-size:11px;color:#7A8A9A;margin-top:8px;font-style:italic'>Visibility on the next 30 days so you can plan ahead.</div>
+</div>
+
+<div class='section'>
+<h2><span class='emoji'>&#127919;</span> Most-requested programs this week</h2>
+<p style='font-size:12px;color:#7A8A9A;margin:0 0 12px'>Where our coverage work was concentrated. Helps us plan tomorrow.</p>
+<table>
+<thead><tr><th>Program</th><th class='num'>Requests</th><th>Distribution</th></tr></thead>
+<tbody>
+<tr><td>Construct 3</td><td class='num'>52</td><td><span class='prog-bar' style='width:200px'></span></td></tr><tr><td>Blender</td><td class='num'>31</td><td><span class='prog-bar' style='width:119px'></span></td></tr><tr><td>Roblox</td><td class='num'>23</td><td><span class='prog-bar' style='width:88px'></span></td></tr><tr><td>N/A</td><td class='num'>22</td><td><span class='prog-bar' style='width:85px'></span></td></tr><tr><td>Google Docs</td><td class='num'>15</td><td><span class='prog-bar' style='width:58px'></span></td></tr><tr><td>Unity</td><td class='num'>9</td><td><span class='prog-bar' style='width:35px'></span></td></tr><tr><td>MCreator</td><td class='num'>8</td><td><span class='prog-bar' style='width:31px'></span></td></tr><tr><td>Scratch</td><td class='num'>7</td><td><span class='prog-bar' style='width:27px'></span></td></tr>
+</tbody>
+</table>
+</div>
+
+<div class='section'>
+<h2><span class='emoji'>&#127942;</span> A win to celebrate</h2>
+<div class='win-card'>
+<div class='win-title'>Best coverage week (last 12 weeks)</div>
+<div class='win-text'>The week of <strong>May 11</strong> saw <strong>155 classes covered</strong> across <strong>372 sub requests</strong>. That's the team showing up at full strength &mdash; and exactly the kind of week to remember when the queue gets noisy.</div>
+</div>
+</div>
+
+<footer>
+Last refreshed <strong>Friday, May 29, 2026 5:25 PM ET</strong> &middot; Sources: Pipedrive (new student attending stages) + Notion New Student DB (SLO) + Notion PTO Class Tracker (coverage) + Student Summary API (active count) + XP Scheduling API (callout dedup) &middot; Built for the CX Scheduling team
+</footer>
+
+</div>
+</body></html>
