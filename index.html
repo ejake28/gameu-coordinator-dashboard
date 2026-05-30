@@ -44,6 +44,13 @@ td.num { text-align: right; font-weight: 700; color: #1F3A5F; }
 
 .prog-bar { display: inline-block; height: 8px; background: linear-gradient(90deg, #F39C12, #E67E22); border-radius: 4px; margin-right: 8px; vertical-align: middle; }
 
+.hours-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+.hours-card { background: linear-gradient(135deg, #FFF4E5 0%, #FFE8C7 100%); border-radius: 10px; padding: 18px 20px; border: 1px solid #F5C97A; text-align: center; }
+.hours-card .hours-lbl { font-size: 11px; color: #B9770E; text-transform: uppercase; letter-spacing: 0.5px; font-weight: 700; margin-bottom: 6px; }
+.hours-card .hours-num { font-size: 36px; font-weight: 800; color: #1F3A5F; line-height: 1; letter-spacing: -0.5px; }
+.hours-card .hours-sub { font-size: 11px; color: #7A8A9A; text-transform: uppercase; letter-spacing: 0.4px; margin-top: 4px; }
+.hours-card .hours-hours { font-size: 13px; color: #1F3A5F; margin-top: 10px; padding-top: 10px; border-top: 1px dashed #F5C97A; }
+.hours-card .hours-hours strong { color: #16A085; font-size: 16px; }
 .slo-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
 .slo-stat { background: linear-gradient(135deg, #F8FAFC 0%, #EEF3F8 100%); border-radius: 10px; padding: 16px 18px; border: 1px solid #E4E9EF; }
 .slo-num { font-size: 32px; font-weight: 800; color: #1F3A5F; line-height: 1; letter-spacing: -0.5px; }
@@ -134,10 +141,35 @@ footer strong { color: #1F3A5F; }
 </div>
 
 <div class='section'>
+<h2><span class='emoji'>&#127942;</span> Class hours added &mdash; what we've onboarded</h2>
+<p style='font-size:12px;color:#7A8A9A;margin:0 0 12px'>Total students moved to Attending plus the weekly class hours they bring in. Source: Pipedrive Billing Method (1hr/wk, 2hr/wk, biweekly = 0.5hr/wk, etc.).</p>
+<div class='hours-grid'>
+  <div class='hours-card'>
+    <div class='hours-lbl'>Last 7 days</div>
+    <div class='hours-num'>11</div>
+    <div class='hours-sub'>students</div>
+    <div class='hours-hours'><strong>11.0</strong> hrs/wk added</div>
+  </div>
+  <div class='hours-card'>
+    <div class='hours-lbl'>Last 30 days</div>
+    <div class='hours-num'>84</div>
+    <div class='hours-sub'>students</div>
+    <div class='hours-hours'><strong>84.0</strong> hrs/wk added</div>
+  </div>
+  <div class='hours-card'>
+    <div class='hours-lbl'>Last 90 days</div>
+    <div class='hours-num'>264</div>
+    <div class='hours-sub'>students</div>
+    <div class='hours-hours'><strong>264.0</strong> hrs/wk added</div>
+  </div>
+</div>
+</div>
+
+<div class='section'>
 <h2><span class='emoji'>&#128737;</span> What's coming &mdash; forward intake pipeline</h2>
 <p style='font-size:12px;color:#7A8A9A;margin:0 0 12px'>Open deals at each stage before "Attending." Useful for seeing what's heading our way.</p>
 <div class='bucket-grid' style='grid-template-columns: repeat(6, 1fr)'>
-<div class='bucket'><div class='num'>210</div><div class='lbl'>Lead In</div></div><div class='bucket'><div class='num'>49</div><div class='lbl'>Trial Class Set</div></div><div class='bucket'><div class='num'>41</div><div class='lbl'>Waiting on Decision</div></div><div class='bucket'><div class='num'>57</div><div class='lbl'>Hold / Need Approval</div></div><div class='bucket'><div class='num'>0</div><div class='lbl'>Need to Schedule</div></div><div class='bucket'><div class='num'>0</div><div class='lbl'>Scheduled / 1st Class Set</div></div>
+<div class='bucket'><div class='num'>210</div><div class='lbl'>Lead In</div></div><div class='bucket'><div class='num'>49</div><div class='lbl'>Trial Class Set</div></div><div class='bucket'><div class='num'>40</div><div class='lbl'>Waiting on Decision</div></div><div class='bucket'><div class='num'>58</div><div class='lbl'>Hold / Need Approval</div></div><div class='bucket'><div class='num'>0</div><div class='lbl'>Need to Schedule</div></div><div class='bucket'><div class='num'>0</div><div class='lbl'>Scheduled / 1st Class Set</div></div>
 </div>
 </div>
 
@@ -175,7 +207,7 @@ footer strong { color: #1F3A5F; }
 </div>
 
 <footer>
-Last refreshed <strong>Friday, May 29, 2026 8:12 PM ET</strong> &middot; Sources: Pipedrive (new student attending stages) + Notion New Student DB (SLO) + Notion PTO Class Tracker (coverage) + Student Summary API (active count) + XP Scheduling API (callout dedup) &middot; Built for the CX Scheduling team
+Last refreshed <strong>Friday, May 29, 2026 8:26 PM ET</strong> &middot; Sources: Pipedrive (new student attending stages) + Notion New Student DB (SLO) + Notion PTO Class Tracker (coverage) + Student Summary API (active count) + XP Scheduling API (callout dedup) &middot; Built for the CX Scheduling team
 </footer>
 
 </div>
