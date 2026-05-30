@@ -24,6 +24,8 @@ header .badge { display: inline-block; background: #F39C12; color: #fff; padding
 .tile .big { font-size: 38px; font-weight: 800; color: #1F3A5F; margin: 6px 0 4px; line-height: 1; letter-spacing: -0.5px; }
 .tile .sub { font-size: 12px; color: #7A8A9A; }
 .tile .sub strong { color: #1F3A5F; }
+.tile .rolling { font-size: 10px; color: #7A8A9A; margin-top: 6px; padding-top: 6px; border-top: 1px dashed #E4E9EF; font-style: italic; }
+.tile .rolling strong { color: #1F3A5F; font-style: normal; }
 
 .section { background: #fff; border-radius: 12px; padding: 22px 26px; margin-bottom: 22px; box-shadow: 0 2px 12px rgba(31,58,95,0.06); }
 .section h2 { margin: 0 0 14px; font-size: 18px; color: #1F3A5F; font-weight: 700; display: flex; align-items: center; gap: 8px; }
@@ -82,11 +84,13 @@ footer strong { color: #1F3A5F; }
     <div class='label'>PTO coverage (advance notice)</div>
     <div class='big'>43%</div>
     <div class='sub'><strong>82 covered</strong> of 192 total &middot; 87 still pending</div>
+    <div class='rolling'>12-wk structural rate: <strong>72%</strong> covered (of resolved)</div>
   </div>
   <div class='tile amber'>
     <div class='label'>Sub coverage (callouts)</div>
     <div class='big'>20%</div>
     <div class='sub'><strong>16 covered</strong> of 80 total &middot; 41 still pending</div>
+    <div class='rolling'>12-wk structural rate: <strong>39%</strong> covered (of resolved)</div>
   </div>
   <div class='tile teal'>
     <div class='label'>Active Accelerate students</div>
@@ -171,7 +175,7 @@ footer strong { color: #1F3A5F; }
 </div>
 
 <footer>
-Last refreshed <strong>Friday, May 29, 2026 7:54 PM ET</strong> &middot; Sources: Pipedrive (new student attending stages) + Notion New Student DB (SLO) + Notion PTO Class Tracker (coverage) + Student Summary API (active count) + XP Scheduling API (callout dedup) &middot; Built for the CX Scheduling team
+Last refreshed <strong>Friday, May 29, 2026 8:06 PM ET</strong> &middot; Sources: Pipedrive (new student attending stages) + Notion New Student DB (SLO) + Notion PTO Class Tracker (coverage) + Student Summary API (active count) + XP Scheduling API (callout dedup) &middot; Built for the CX Scheduling team
 </footer>
 
 </div>
