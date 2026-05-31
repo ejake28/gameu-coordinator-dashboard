@@ -63,6 +63,9 @@ td.num { text-align: right; font-weight: 700; color: #1F3A5F; }
 .bucket .lbl { font-size: 10px; color: #7A8A9A; text-transform: uppercase; letter-spacing: 0.4px; margin-top: 4px; font-weight: 600; }
 .bucket.now { background: linear-gradient(135deg, #FFF4E5 0%, #FCE4B6 100%); border-color: #F39C12; }
 .bucket.now .num { color: #B9770E; }
+.bucket.queue { background: linear-gradient(135deg, #FDEEF4 0%, #F8D7E5 100%); border-color: #E91E63; box-shadow: 0 0 0 2px rgba(233,30,99,0.15); }
+.bucket.queue .num { color: #AD1457; }
+.bucket.queue .lbl { color: #AD1457; }
 
 .win-card { background: linear-gradient(135deg, #E8F8F2 0%, #D5F5E3 100%); border-radius: 10px; padding: 16px 20px; border-left: 4px solid #16A085; }
 .win-card .win-title { font-size: 12px; font-weight: 700; color: #16A085; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px; }
@@ -169,8 +172,9 @@ footer strong { color: #1F3A5F; }
 <h2><span class='emoji'>&#128737;</span> What's coming &mdash; forward intake pipeline</h2>
 <p style='font-size:12px;color:#7A8A9A;margin:0 0 12px'>Open deals at each stage before "Attending." Useful for seeing what's heading our way.</p>
 <div class='bucket-grid' style='grid-template-columns: repeat(6, 1fr)'>
-<div class='bucket'><div class='num'>211</div><div class='lbl'>Lead In</div></div><div class='bucket'><div class='num'>49</div><div class='lbl'>Trial Class Set</div></div><div class='bucket'><div class='num'>40</div><div class='lbl'>Waiting on Decision</div></div><div class='bucket'><div class='num'>58</div><div class='lbl'>Hold / Need Approval</div></div><div class='bucket'><div class='num'>55</div><div class='lbl'>Need to Schedule</div></div><div class='bucket'><div class='num'>29</div><div class='lbl'>Scheduled / 1st Class Set</div></div>
+<div class='bucket'><div class='num'>211</div><div class='lbl'>Lead In</div></div><div class='bucket'><div class='num'>49</div><div class='lbl'>Trial Class Set</div></div><div class='bucket'><div class='num'>40</div><div class='lbl'>Waiting on Decision</div></div><div class='bucket'><div class='num'>58</div><div class='lbl'>Hold / Need Approval</div></div><div class='bucket queue'><div class='num'>55</div><div class='lbl'>Need to Schedule</div></div><div class='bucket'><div class='num'>29</div><div class='lbl'>Scheduled / 1st Class Set</div></div>
 </div>
+<div style='font-size:11px;color:#AD1457;background:#FDEEF4;border-left:3px solid #E91E63;padding:8px 10px;margin-top:10px;border-radius:4px'><strong>&#9650; Your team's queue:</strong> <strong>55</strong> won deals waiting on us to book their first class. Move these into &quot;Scheduled / 1st Class Set&quot; &mdash; this is the column Brad watches.</div>
 </div>
 
 <div class='section'>
@@ -208,7 +212,7 @@ footer strong { color: #1F3A5F; }
 </div>
 
 <footer>
-Last refreshed <strong>Saturday, May 30, 2026 8:42 PM ET</strong> &middot; Sources: Pipedrive (new student attending stages) + Notion New Student DB (SLO) + Notion PTO Class Tracker (coverage) + Student Summary API (active count) + XP Scheduling API (callout dedup) &middot; Built for the CX Scheduling team
+Last refreshed <strong>Saturday, May 30, 2026 8:46 PM ET</strong> &middot; Sources: Pipedrive (new student attending stages) + Notion New Student DB (SLO) + Notion PTO Class Tracker (coverage) + Student Summary API (active count) + XP Scheduling API (callout dedup) &middot; Built for the CX Scheduling team
 </footer>
 
 </div>
