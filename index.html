@@ -5,10 +5,13 @@
 * { box-sizing: border-box; }
 body { font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif; margin: 0; background: linear-gradient(135deg, #F8FAFC 0%, #EEF3F8 100%); color: #1F3A5F; min-height: 100vh; }
 .wrap { max-width: 1180px; margin: 0 auto; padding: 28px 24px 60px; }
-header { background: linear-gradient(135deg, #1F3A5F 0%, #2C4D7B 100%); color: #fff; padding: 28px 32px; border-radius: 12px; margin-bottom: 24px; box-shadow: 0 4px 20px rgba(31,58,95,0.15); }
+header { background: linear-gradient(135deg, #1F3A5F 0%, #2C4D7B 100%); color: #fff; padding: 28px 32px; border-radius: 12px; margin-bottom: 24px; box-shadow: 0 4px 20px rgba(31,58,95,0.15); display: flex; align-items: center; justify-content: space-between; gap: 24px; }
+header .head-text { flex: 1; min-width: 0; }
 header h1 { margin: 0 0 6px; font-size: 28px; font-weight: 800; letter-spacing: -0.3px; }
 header .subtitle { font-size: 14px; opacity: 0.85; }
 header .badge { display: inline-block; background: #F39C12; color: #fff; padding: 4px 12px; border-radius: 20px; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.6px; margin-bottom: 6px; }
+header .mascot { width: 84px; height: 84px; border-radius: 50%; flex-shrink: 0; box-shadow: 0 2px 12px rgba(0,0,0,0.18); border: 3px solid rgba(255,255,255,0.85); object-fit: cover; }
+@media (max-width: 540px) { header .mascot { width: 60px; height: 60px; } header { padding: 20px; gap: 12px; } header h1 { font-size: 22px; } }
 
 .hero { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; margin-bottom: 28px; }
 @media (max-width: 1100px) { .hero { grid-template-columns: repeat(3, 1fr); } }
@@ -85,9 +88,12 @@ footer strong { color: #1F3A5F; }
 <body>
 <div class='wrap'>
 <header>
+<div class='head-text'>
 <div class='badge'>CX Coordinator View</div>
 <h1>Our Week at GameU &#127918;</h1>
 <div class='subtitle'>A snapshot of the work we're doing, the students we're helping, and what's headed our way.</div>
+</div>
+<img class='mascot' src='mascot.png' alt='CX Knowledge mascot' />
 </header>
 
 <div class='hero'>
@@ -249,7 +255,7 @@ footer strong { color: #1F3A5F; }
 </div>
 
 <footer>
-Last refreshed <strong>Saturday, May 30, 2026 9:30 PM ET</strong> &middot; Sources: Pipedrive (new student attending stages) + Notion New Student DB (SLO) + Notion PTO Class Tracker (coverage) + Student Summary API (active count) + XP Scheduling API (callout dedup) &middot; Built for the CX Scheduling team
+Last refreshed <strong>Saturday, May 30, 2026 9:47 PM ET</strong> &middot; Sources: Pipedrive (new student attending stages) + Notion New Student DB (SLO) + Notion PTO Class Tracker (coverage) + Student Summary API (active count) + XP Scheduling API (callout dedup) &middot; Built for the CX Scheduling team
 </footer>
 
 </div>
